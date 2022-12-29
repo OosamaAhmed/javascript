@@ -253,7 +253,7 @@
 //     myElement(names[i] , ages[i])
 // }
 
-//   api in js
+//   api in js---------------------------------------------------------
 
 // last used
 // fetch ("https://randomuser.me/api/")
@@ -268,29 +268,50 @@
 
 //  modern used
 
-async function get() {
-  const response = await fetch("https://retoolapi.dev/4RxTa5/data");
-  const data = await response.json();
+function get() {
+  fetch("https://retoolapi.dev/4RxTa5/data").then((res) =>
+    res.json().then(users)
+  );
+  //the data get success
+  //we are going to sow data
+  //to loop in array and show each item alone
+  //for each it is the pest thing hat i havenot the length
+}
+get(); // to call afunction to start fetching api and work with it
 
-  // console.log(data[0].name);
-  // // document.querySelector("#content h1").innerHTML =data[2].name;
-  // document.querySelector("#content img").src = data[2].images
-  // document.querySelector("#content p").innerHTML = data[2].paragraph
-
-  // data.map(function getmyData(myData) {
-  //   document.querySelector("#content h1").innerHTML += `${myData.name} `;
-  //   document.querySelector("#content img").src += `${myData.images}`;
-  //   document.querySelector("#content p").innerHTML += `${myData.paragraph} `;
-  //   // console.log(myData.name);
-  // });
-
-  data.forEach(elem =>  {
-
-    document.querySelector("h1").innerHTML +=elem.name +'<br>';
-    document.querySelector("img").src += elem.images
-    document.querySelector("p").innerHTML += elem.paragraph
-  
-
+var div;
+function users(myusers) {
+  localStorage.setItem("users", JSON.stringify(myusers))
+  console.log(myusers);
+  myusers.forEach(function (oneusers) {
+    // console.log(oneusers);
+    div = document.getElementById("mydiv");
+    // style in js but you sould first drow it in your mind as html
+    div.innerHTML += `<div style=" border:1px solid ;padding : 10px ; width:200px;margin:10px ">
+     <h3>${oneusers.name}</h3>
+     <p>${oneusers.paragraph}</p>
+     <button onclick="deleteusers(${oneusers.id})">Delete</button>    
+     <button><a href="edit.html?${oneusers.id}" target="_blank" >Edit</a></button>
+    
+     </div>`
+     
+     
+     //? optional paramiter ;
   });
 }
-get();
+// delete fron api 
+function deleteusers(userId) {
+  //go to api for delete
+  // you shoud take id of users to delete it
+
+  // console.log("test workind")
+  // console.log(userId)
+  div.innerHTML = "";
+  fetch("https://retoolapi.dev/4RxTa5/data/" + userId, {
+    method: "DELETE",
+  }).then(
+    (res) => res.json().then(get) //function of the main fetch
+  );
+}
+
+

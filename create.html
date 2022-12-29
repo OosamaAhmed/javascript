@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create A New Item In Api </title>
+</head>
+
+<body>
+    <h1 style="text-align: center;">create new user </h1>
+    <table border="4">
+        <form action="">
+            <tr>
+                <td>Name:</td>
+                <td> <input type="text" id="name"></td>
+            </tr>
+            <tr>
+                <td>Info:</td>
+                <td> <input type="text" id="info"></td>
+            </tr>
+            <input type="button" value="save" onclick="save()">
+
+        </form>
+    </table>
+
+
+    <script>
+        //select user data 
+        // fetch to api or post it in api 
+        function save() {
+
+            var username = document.getElementById("name").value //to catch the input value 
+            var userinfo = document.getElementById("info").value
+            // console.log(username)
+            // console.log(userinfo)
+            // console.log("test")
+            fetch("https://retoolapi.dev/4RxTa5/data/", {
+                method: "POST",
+                body: JSON.stringify({
+                    //key & value
+                    //name of api 
+                    name: username,
+                    paragraph: userinfo
+                }),
+                headers: { "Content-type": "application/json" } //معناها ان ياخد الكونتنت اللى نوعه جسون فلازم اكون عارف وانا رايح لل url نوع الكونتنت 
+            }).then(res => res.json()).then(data => location.replace("html.html")//data as avariable to store in it  
+            )
+        }
+    </script>
+</body>
+
+</html>

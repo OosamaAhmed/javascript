@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>edit </title>
+</head>
+
+<body>
+    <h1>edit </h1>
+    <table border="4">
+        <form action="">
+            <tr>
+                <td>Name:</td>
+                <td> <input type="text" id="name"></td>
+            </tr>
+            <tr>
+                <td>Info:</td>
+                <td>              <textarea name="" id="info" cols="30" rows="10"></textarea>
+                </td>
+            </tr>
+            <input type="button" value="save edit " onclick="edit()">
+
+        </form>
+    </table>
+
+    <script>
+        // return data 
+        //edit data(send new data)
+        id = location.search.split("?")[1]
+        // console.log(id) // to check
+
+        function viewuswer() {
+            fetch("https://retoolapi.dev/4RxTa5/data/"+id ).then(res => res.json())
+                    .then(getuser) //function of the main fetch
+                   }
+
+        viewuswer()
+
+        function getuser(data) {
+            var username = document.getElementById("name").value = data.name //to catch the input value 
+            var userinfo = document.getElementById("info").value = data.paragraph 
+        }
+
+        function edit() {
+            var username = document.getElementById("name").value //to catch the input value 
+            var userinfo = document.getElementById("info").value  
+
+            fetch("https://retoolapi.dev/4RxTa5/data/" +id, {
+                method: "PUT",
+                body: JSON.stringify({
+                    //key & value
+                    //name of api 
+                    id :id,
+                    name: username,
+                    paragraph: userinfo
+                }),
+                headers: { "Content-type": "application/json" } 
+            }).then(res => res.json()).then(data => location.replace("html.html")//data as avariable to store in it  
+            )
+        }
+
+
+    </script>
+</body>
+
+</html>
